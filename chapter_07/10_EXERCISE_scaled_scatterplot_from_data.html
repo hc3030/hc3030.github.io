@@ -83,7 +83,13 @@
 									d3.max(dataset, function(d) { return d.Count; })
 								])
 							   .range([h - padding, padding]);
-		          
+				 
+				rScale = d3.scaleLinear()
+							   .domain([
+									d3.min(dataset, function(d) { return d.Count; }),
+									d3.max(dataset, function(d) { return d.Count; })
+								])
+							   .range([3, 15]);			   
                   //TODO:add a third linear scale here for the radius of the circles called rScale. 
                 // the domain would be the minimum and maxium values for the count same as the yScale
                //the range would be of your choosing, experiment till it looks ok
@@ -93,37 +99,39 @@
 							.attr("width", w)
 							.attr("height", h);
 
- 				svg.selectAll("text")
- 				   .data(dataset)
- 				   .enter()
- 				   .append("text")
- 				   .text(function(d) {
-                       //TODO: return the approperiate label value
- 				   })
- 				   .attr("x", function(d) {
-                       //TODO: return the approperiate x value
- 				   })
- 				   .attr("y", function(d) {
-                       //TODO: return the approperiate y value
- 				   })
- 				   .attr("font-family", "sans-serif")
- 				   .attr("font-size", "11px")
- 				   .attr("fill", "#bbb");
+			
 
 				svg.selectAll("circle")
 				   .data(dataset)
 				   .enter()
 				   .append("circle")
-				   .attr("cx", function(d) {
+				   .attr("cx", function(d){
+			   		return xScale(d.Hour)
                        //TODO: return the approperiate x value
 				   })
 				   .attr("cy", function(d) {
+					return yScale(d.Count)
                        //TODO: return the approperiate y value
 				   })
 				   .attr("r", function(d){
+					return rScale(d.Count)
                        //TODO: use the rScale to create circles whose size correspond to the count
 				   });
-                   
+
+				  svg.selectAll("text")
+ 				   .data(dataset)
+ 				   .enter()
+ 				   .append("text")
+ 				   .text(function(d) {return d.Count;
+ 				   })
+ 				   .attr("x", function(d) {return xScale(d.Hour);   
+ 				   })
+ 				   .attr("y", function(d) {return yScale(d.Count);
+ 				   })
+ 				   .attr("font-family", "sans-serif")
+ 				   .attr("font-size", "15px")
+ 				   .attr("fill", "red");   
+				  
                    //TODO: you may see that now the new radius overlaps the labels and are hard to see. adjust it in 1 of 2 ways
                    //either change the order and draw the circles before you draw the labels so that labels lie on top
                    //or offset the x and y values of the labels so that all labels are clearly visible 
