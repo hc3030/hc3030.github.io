@@ -89,17 +89,15 @@
 					   .transition()
 					   .delay(1000)					// <-- A static, 1s delay before transition begins
 					   .duration(2000)
-          			   .attr("x", function(d) {
-                           //TODO
-          			   })
+          			   .attr("x", 5 )
          			   .attr("y", function(d, i) {
-                           //TODO
+						return xScale(i);//TODO
          			   })
-			           .attr("height", function(d){
-                           //TODO
-			           })
+			           .attr("height", 
+						xScale.bandwidth() //TODO
+			           )
 					   .attr("width", function(d) {
-                           //TODO
+						return yScale(d); //TODO
 					   })
 
 					//Update all labels
@@ -112,10 +110,10 @@
 					   		return d;
 					   })
 					   .attr("x", function(d, i) {
-                           //TODO
+						return 20; //TODO
 					   })
 					   .attr("y", function(d,i) {
-                           //TODO
+						return xScale(i) + xScale.bandwidth() / 2;//TODO
 					   });
 					   				
 				});
