@@ -42,7 +42,7 @@
 			d3.csv("../time_scale_data.csv", rowConverter)
             .then(function(d) {
 				//Copy data into global dataset
-				dataset = data;
+				dataset = d;
 
 				//Discover start and end dates in dataset
 				var startDate = d3.min(dataset, function(d) { return d.Date; });
@@ -116,11 +116,13 @@
 				   .attr("r", 5)
                    .on("mouseover",function(d,i){
                        d3.select(this).attr("fill","red")
-                       //TODO: show tooltip here
+                       d3.select("#tooltip").classed("hidden", false);
+					   //TODO: show tooltip here
                    })
                    .on("mouseout",function(d,i){
                        d3.select(this).attr("fill","black")
-                       //TODO: hide tooltip here
+                       d3.select("#tooltip").classed("hidden", true);
+					   //TODO: hide tooltip here
                    });
 	   			
 	   			//Create X axis
